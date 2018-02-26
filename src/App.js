@@ -1,21 +1,19 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
-
-class App extends Component {
-  render() {
-    return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title">Welcome to React</h1>
-        </header>
-        <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
-        </p>
-      </div>
-    );
-  }
-}
-
+import Home from './pages/Home';
+import { Container } from 'semantic-ui-react';
+import { Route, BrowserRouter as Router, Switch } from 'react-router-dom';
+import Callback from './pages/Callback';
+import PlaylistDetail from './pages/PlaylistDetail';
+const App = () => (
+  <Router>
+    <Container>
+      <Switch>
+        <Route exact path="/" component={Home} />
+        <Route path="/callback" component={Callback} />
+        <Route path="/playlist/:uri" component={PlaylistDetail} />
+        {/*<Route path="/faq" component={FAQ} />*/}
+      </Switch>
+    </Container>
+  </Router>
+);
 export default App;
