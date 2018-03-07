@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { getPlaylists } from '../actions/users';
-import { Icon, Label, Menu, Table, Button } from 'semantic-ui-react';
+import { Table, Button } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
 
 class HomePage extends Component {

@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import QueryString from 'query-string';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { fetchPlaylistTracks } from '../actions/users';
@@ -9,7 +8,6 @@ import {
   Bar,
   BarChart,
   CartesianGrid,
-  Legend,
   ResponsiveContainer,
   Tooltip,
   XAxis,
