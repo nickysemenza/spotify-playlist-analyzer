@@ -1,7 +1,8 @@
 import {
   INITIATE_LOGIN,
   SET_PLAYLIST_TRACKS,
-  SET_PLAYLISTS
+    SET_PLAYLISTS,
+    LOGOUT
 } from '../actions/users';
 import update from 'immutability-helper';
 const INITIAL_STATE = {
@@ -21,6 +22,8 @@ export default function(state = INITIAL_STATE, action) {
         token: action.token,
         authenticated: true
       };
+  case LOGOUT:
+      return INITIAL_STATE;
     case SET_PLAYLISTS:
       return {
         ...state,

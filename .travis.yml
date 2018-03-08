@@ -1,0 +1,29 @@
+language: node_js
+cache: yarn
+node_js:
+- 8
+install:
+- pip install --user awscli
+- yarn
+script:
+- npm test -- --coverage
+- npm run build
+
+deploy:
+  # Deploy master to s3
+  on:
+    branch: master
+  provider: s3
+  # You can refer to environment variables from Travis repo settings!
+  access_key_id: $AWS_ACCESS_KEY_ID
+  secret_access_key: $AWS_SECRET_ACCESS_KEY
+  bucket: spotify-playlist-analyzer-frontend
+  # Prevent Travis from deleting your built site so it can be uploaded.
+  skip_cleanup: true
+  local_dir: build
+  cache_control: "max-age=180"
+after_deploy:
+  # Allow `awscli` to make requests to CloudFront.
+  - aws configure set preview.cloudfront true
+  # Invalidate every object in the targeted distribution.
+  - aws cloudfront create-invalidation --distribution-id $CLOUDFRONT_DISTRIBUTION_ID --paths "/*"

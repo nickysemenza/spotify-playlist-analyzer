@@ -1,13 +1,23 @@
 import { persistLocally, paginateAPIFetch } from './index';
 
 export const INITIATE_LOGIN = 'INITIATE_LOGIN';
+export const LOGOUT = 'LOGOUT';
 export function initiateLoginFromCallback(callbackdata) {
   // console.log(callbackdata);
   let token = callbackdata.access_token;
-  let timeMs = Math.round(new Date().getTime() / 1000);
-  let expirationDate = timeMs + parseInt(callbackdata.expires_in, 10) * 10;
-  persistLocally('userdata', callbackdata);
-  return { type: INITIATE_LOGIN, expirationDate, token };
+  let currentTimeMs = Math.round(new Date().getTime() / 1000);
+  let expirationDate = currentTimeMs + parseInt(callbackdata.expires_in, 10) * 10;
+  if(currentTimeMs < expirationDate) {
+     persistLocally('userdata', callbackdata);
+    return { type: INITIATE_LOGIN, expirationDate, token };
+  } else {
+      console.log("expired token!");
+      return {type: LOGOUT }
+  }
+}
+export function logout() {
+    persistLocally('userdata',null);
+    return {type: LOGOUT};
 }
 export const GET_PLAYLISTS = 'GET_PLAYLISTS';
 export function getPlaylists() {
